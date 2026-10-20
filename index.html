@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Transporte de Unitsky</title>
+<meta name="description" content="El transporte terrestre uST y el Vehículo Planetario General (VPG) de Anatoli Unitsky, explicados fácil.">
+<meta name="theme-color" content="#0b1530">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<style>
+:root{
+  --bg:#0b1530; --bg2:#122046; --card:#16285a; --line:#2a3f7a;
+  --txt:#eef2ff; --muted:#a9b6dd; --acc:#4fd1c5; --acc2:#f6c453; --warn:#ff8a65; --ok:#7ee08a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;font-size:17px}
+a{color:var(--acc)}
+header.hero{background:radial-gradient(circle at 70% 20%,#27407f 0,#0b1530 60%);padding:56px 16px 40px;text-align:center;position:relative;overflow:hidden}
+.hero svg.planet{width:220px;max-width:70%;margin:0 auto 18px;display:block}
+.hero h1{font-size:clamp(1.7rem,5vw,2.6rem);line-height:1.2;margin-bottom:12px}
+.hero p{color:var(--muted);max-width:640px;margin:0 auto 20px}
+.tag{display:inline-block;background:rgba(79,209,197,.15);color:var(--acc);border:1px solid var(--acc);padding:3px 12px;border-radius:99px;font-size:.8rem;margin-bottom:14px}
+nav.tabs{position:sticky;top:0;z-index:20;background:rgba(11,21,48,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);display:flex;overflow-x:auto;gap:4px;padding:8px 10px;scrollbar-width:none}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs a{flex:0 0 auto;text-decoration:none;color:var(--muted);padding:7px 13px;border-radius:99px;font-size:.88rem;white-space:nowrap}
+nav.tabs a:hover,nav.tabs a.on{background:var(--card);color:var(--txt)}
+main{max-width:860px;margin:0 auto;padding:0 16px 40px}
+section{padding:42px 0 10px;scroll-margin-top:60px}
+h2{font-size:1.55rem;margin-bottom:6px}
+h2 small{display:block;font-size:.8rem;color:var(--acc);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+h3{font-size:1.15rem;margin:18px 0 6px}
+p{margin-bottom:12px}
+.lead{color:var(--muted);margin-bottom:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin:14px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.pill{display:inline-block;font-size:.75rem;font-weight:700;padding:2px 9px;border-radius:99px;margin-bottom:8px}
+.p-a{background:rgba(79,209,197,.18);color:var(--acc)}
+.p-b{background:rgba(246,196,83,.18);color:var(--acc2)}
+.p-w{background:rgba(255,138,101,.18);color:var(--warn)}
+.big{font-size:2rem;font-weight:800;color:var(--acc2);line-height:1.1}
+.simple{border-left:4px solid var(--acc2);background:rgba(246,196,83,.07);padding:12px 14px;border-radius:0 12px 12px 0;margin:14px 0}
+.simple b{color:var(--acc2)}
+.warnbox{border:1px solid var(--warn);background:rgba(255,138,101,.08);border-radius:16px;padding:18px;margin:14px 0}
+.warnbox h3{color:var(--warn);margin-top:0}
+ul.list{padding-left:20px;margin-bottom:12px}
+ul.list li{margin-bottom:6px}
+.figure{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:12px;margin:12px 0}
+.figure svg{width:100%;height:auto;display:block}
+.cap{font-size:.82rem;color:var(--muted);text-align:center;margin-top:6px}
+label{font-size:.9rem;color:var(--muted)}
+input[type=range]{width:100%;accent-color:var(--acc);margin:8px 0}
+.bars{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.bar{display:flex;align-items:center;gap:8px;font-size:.85rem}
+.bar span.l{width:110px;flex:0 0 110px;color:var(--muted)}
+.bar div.t{flex:1;background:var(--bg);border-radius:8px;height:22px;overflow:hidden}
+.bar div.f{height:100%;border-radius:8px;transition:width .3s;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-size:.75rem;font-weight:700;color:#0b1530}
+.timeline{border-left:2px solid var(--line);margin-left:8px;padding-left:18px}
+.timeline .ev{position:relative;margin-bottom:16px}
+.timeline .ev:before{content:"";position:absolute;left:-25px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--acc)}
+.timeline .ev b{color:var(--acc)}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:8px 0;padding:12px 14px}
+details summary{cursor:pointer;font-weight:700}
+details p{margin:8px 0 0;color:var(--muted)}
+.quiz .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:12px 0}
+.quiz .q p{font-weight:700}
+.quiz button.op{display:block;width:100%;text-align:left;background:var(--bg2);color:var(--txt);border:1px solid var(--line);padding:10px 12px;border-radius:10px;margin:6px 0;font-size:.95rem;cursor:pointer}
+.quiz button.op.ok{border-color:var(--ok);background:rgba(126,224,138,.15)}
+.quiz button.op.no{border-color:var(--warn);background:rgba(255,138,101,.15)}
+.quiz .exp{font-size:.9rem;color:var(--muted);margin-top:6px;display:none}
+#score{font-weight:800;color:var(--acc2)}
+.btn{display:inline-flex;align-items:center;gap:6px;background:var(--acc);color:#0b1530;border:0;padding:10px 16px;border-radius:99px;font-weight:700;cursor:pointer;font-size:.92rem;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--acc);border:1px solid var(--acc)}
+.listen{position:fixed;right:14px;bottom:14px;z-index:30;box-shadow:0 6px 20px rgba(0,0,0,.4)}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:30px 16px 80px;border-top:1px solid var(--line)}
+@media (max-width:480px){body{font-size:16px}.bar span.l{width:84px;flex-basis:84px}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <svg class="planet" viewBox="0 0 220 220" aria-hidden="true">
+    <defs><radialGradient id="g" cx="40%" cy="35%"><stop offset="0" stop-color="#5fa8ff"/><stop offset="1" stop-color="#1b3d8a"/></radialGradient></defs>
+    <circle cx="110" cy="110" r="70" fill="url(#g)"/>
+    <path d="M70 90 q20 -15 40 0 t35 5 M60 125 q25 10 50 -2 t45 8" stroke="#7ee08a" stroke-width="6" fill="none" stroke-linecap="round" opacity=".6"/>
+    <ellipse cx="110" cy="110" rx="104" ry="24" fill="none" stroke="#f6c453" stroke-width="5"/>
+    <path d="M6 110 a104 24 0 0 0 208 0" fill="none" stroke="#f6c453" stroke-width="5"/>
+    <path d="M40 110 a70 70 0 0 0 140 0" fill="url(#g)" opacity="0"/>
+  </svg>
+  <span class="tag">Videoinforme explicado · IX Conferencia Global</span>
+  <h1>El transporte ideal, en la Tierra y hacia el espacio</h1>
+  <p>Lo que propone el ingeniero Anatoli Unitsky: trenes livianos que ruedan sobre cuerdas de acero tensadas y un anillo gigante alrededor del planeta para llegar al espacio sin cohetes. Explicado fácil, con lo bueno, lo dudoso y lo que debes saber.</p>
+  <a class="btn" href="#idea">Empezar</a>
+</header>
+
+<nav class="tabs" id="tabs">
+  <a href="#idea">La idea</a>
+  <a href="#rueda">Rueda de acero</a>
+  <a href="#aire">Aerodinámica</a>
+  <a href="#cuerda">Riel-cuerda</a>
+  <a href="#nivel">Segundo nivel</a>
+  <a href="#vpg">El VPG</a>
+  <a href="#union">La conexión</a>
+  <a href="#realidad">¿Qué existe hoy?</a>
+  <a href="#ojo">Ojo: inversiones</a>
+  <a href="#glosario">Glosario</a>
+  <a href="#quiz">Ponte a prueba</a>
+</nav>
+
+<main id="contenido">
+
+<section id="idea">
+  <h2><small>Para arrancar</small>¿De qué trata el video?</h2>
+  <p class="lead">La pregunta del informe es sencilla: ¿cómo sería el transporte si respetara al máximo las leyes de la física y, al mismo tiempo, dañara lo menos posible el medio ambiente?</p>
+  <p>Anatoli Unitsky es un ingeniero bielorruso que lleva más de 40 años con esta idea. En este videoinforme, presentado en la <b>IX Conferencia Global sobre la Industrialización del Espacio Cercano</b>, divide su respuesta en dos partes:</p>
+  <div class="grid">
+    <div class="card"><span class="pill p-a">Parte 1 · En la Tierra</span><h3 style="margin-top:0">Transporte uST</h3><p>Vehículos eléctricos con ruedas de acero que corren elevados, sobre rieles hechos con cuerdas de acero muy tensadas, por encima de las carreteras, el monte y los ríos.</p></div>
+    <div class="card"><span class="pill p-b">Parte 2 · Hacia el espacio</span><h3 style="margin-top:0">Vehículo Planetario General (VPG)</h3><p>Un anillo que le daría la vuelta entera al planeta por la línea del ecuador y subiría a la órbita llevando millones de personas y toneladas de carga, sin cohetes.</p></div>
+  </div>
+  <div class="simple"><b>En palabras sencillas:</b> la idea es no pelear contra la física sino aprovecharla. Menos rozamiento, menos aire en contra, menos peso, menos terreno ocupado. Y según Unitsky, el mismo principio sirve tanto para un tren como para llegar al espacio.</div>
+</section>
+
+<section id="rueda">
+  <h2><small>Parte 1 · Pieza 1</small>La rueda de acero</h2>
+  <p class="lead">El primer punto del informe es la rueda. ¿Por qué acero sobre acero y no llanta de caucho sobre asfalto?</p>
+  <p>Cuando una llanta de caucho rueda, se aplasta y se vuelve a inflar en cada vuelta. Esa deformación se come energía y la convierte en calor. Una rueda de acero sobre un riel de acero casi no se deforma, así que pierde muchísima menos energía.</p>
+  <div class="card">
+    <h3 style="margin-top:0">Comparación aproximada de la resistencia al rodar</h3>
+    <div class="bars">
+      <div class="bar"><span class="l">Llanta en tierra</span><div class="t"><div class="f" style="width:100%;background:var(--warn)">≈ 30–50×</div></div></div>
+      <div class="bar"><span class="l">Llanta en asfalto</span><div class="t"><div class="f" style="width:30%;background:var(--acc2)">≈ 10×</div></div></div>
+      <div class="bar"><span class="l">Acero en acero</span><div class="t"><div class="f" style="width:4%;background:var(--acc)"></div></div></div>
+    </div>
+    <p class="cap">Valores de referencia de física general: la rueda de acero sobre riel tiene un coeficiente de rodadura cerca de 10 veces menor que una llanta sobre asfalto bueno.</p>
+  </div>
+  <div class="simple"><b>Ejemplo de acá:</b> empujar una carretilla con llanta bajita por un potrero es durísimo; empujar una vagoneta de mina por su riel es fácil. Eso mismo es lo que aprovecha la rueda de acero.</div>
+</section>
+
+<section id="aire">
+  <h2><small>Parte 1 · Pieza 2</small>La aerodinámica optimizada</h2>
+  <p class="lead">A poca velocidad lo que más frena es el rozamiento de las ruedas. Pero a alta velocidad el gran enemigo es el aire.</p>
+  <p>La fuerza del aire que frena un vehículo crece con el <b>cuadrado</b> de la velocidad, y la potencia que se gasta para vencerla crece con el <b>cubo</b>. Por eso Unitsky diseña sus vehículos con forma de gota o de bala, y separados del suelo, para que el aire pase limpio por debajo y por los lados.</p>
+  <div class="card">
+    <label for="vel">Mueve la velocidad y mira cuánta potencia se necesita solo para vencer el aire (comparado con ir a 50 km/h):</label>
+    <input type="range" id="vel" min="50" max="500" step="10" value="100">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px">
+      <div><div class="big" id="velTxt">100 km/h</div><span class="cap">velocidad</span></div>
+      <div style="text-align:right"><div class="big" id="potTxt">8×</div><span class="cap">potencia contra el aire</span></div>
+    </div>
+    <div class="bars"><div class="bar"><span class="l">Esfuerzo</span><div class="t"><div class="f" id="potBar" style="width:2%;background:var(--acc)"></div></div></div></div>
+    <p class="cap">Física básica: si duplicas la velocidad, el aire te pide 8 veces más potencia. Por eso la forma del vehículo importa tanto.</p>
+  </div>
+  <div class="simple"><b>Ejemplo de acá:</b> en moto, a 40 km/h casi no sientes el viento; a 100 km/h te empuja el pecho y la moto gasta mucha más gasolina. Una buena carenadura (forma) ahorra combustible.</div>
+</section>
+
+<section id="cuerda">
+  <h2><small>Parte 1 · Pieza 3</small>El paso elevado de riel-cuerda</h2>
+  <p class="lead">Este es el corazón del invento: el riel no es una viga pesada de concreto, sino un tubo o perfil de acero que lleva por dentro cables de acero estirados con muchísima fuerza.</p>
+  <div class="figure">
+    <svg viewBox="0 0 600 220" role="img" aria-label="Esquema del riel-cuerda entre dos torres">
+      <rect x="0" y="0" width="600" height="220" fill="#122046"/>
+      <rect x="0" y="190" width="600" height="30" fill="#2b5a2e"/>
+      <rect x="60" y="70" width="18" height="120" fill="#a9b6dd"/>
+      <rect x="522" y="70" width="18" height="120" fill="#a9b6dd"/>
+      <line x1="69" y1="72" x2="531" y2="72" stroke="#f6c453" stroke-width="7"/>
+      <line x1="69" y1="72" x2="531" y2="72" stroke="#0b1530" stroke-width="2" stroke-dasharray="6 5"/>
+      <g transform="translate(250,40)">
+        <rect x="0" y="0" width="100" height="26" rx="13" fill="#4fd1c5"/>
+        <circle cx="25" cy="30" r="6" fill="#eef2ff"/><circle cx="75" cy="30" r="6" fill="#eef2ff"/>
+      </g>
+      <text x="300" y="105" fill="#eef2ff" font-size="15" text-anchor="middle">Riel con cuerdas de acero tensadas por dentro</text>
+      <text x="69" y="208" fill="#eef2ff" font-size="13" text-anchor="middle">Torre</text>
+      <text x="531" y="208" fill="#eef2ff" font-size="13" text-anchor="middle">Torre</text>
+      <text x="300" y="160" fill="#a9b6dd" font-size="13" text-anchor="middle">Abajo queda libre: cultivos, ganado, agua, fauna</text>
+    </svg>
+    <p class="cap">Esquema simplificado (no a escala).</p>
+  </div>
+  <h3>¿Por qué cuerdas tensadas?</h3>
+  <ul class="list">
+    <li><b>Como cuerda de guitarra:</b> al tensarla mucho, se vuelve rígida y casi no se dobla con el peso del vehículo.</li>
+    <li><b>Menos material:</b> se necesitan menos torres y mucho menos concreto que un puente o un viaducto de tren.</li>
+    <li><b>Viento:</b> según Unitsky, la combinación de rigidez y tensión hace que la estructura aguante vientos fuertes.</li>
+    <li><b>Riel más liso:</b> al estar tensado, el camino queda más parejo, con menos saltos en las juntas que un riel de tren normal.</li>
+  </ul>
+  <div class="simple"><b>Ejemplo de acá:</b> piensa en la cuerda de un tendedero bien templada: aguanta la ropa casi sin doblarse. Si está floja, se cuelga. El riel-cuerda es eso, pero en acero y a una escala enorme.</div>
+</section>
+
+<section id="nivel">
+  <h2><small>Parte 1 · Pieza 4</small>Circular en un nivel elevado ("segundo nivel")</h2>
+  <p class="lead">El último punto de la parte terrestre: en vez de que el transporte vaya pegado al suelo, va por encima.</p>
+  <div class="grid">
+    <div class="card"><span class="pill p-a">Suelo libre</span><p>Una carretera o una vía férrea ocupa una franja ancha de tierra para siempre. Con torres separadas, el terreno de abajo se puede seguir usando para cultivar o para el ganado.</p></div>
+    <div class="card"><span class="pill p-a">Menos accidentes</span><p>Al no cruzarse con personas, animales ni carros, se evitan los choques y atropellos que hay en las vías a nivel.</p></div>
+    <div class="card"><span class="pill p-a">Naturaleza</span><p>No se cortan los caminos de los animales ni los caños; no hay que rellenar humedales ni tumbar tanto monte.</p></div>
+    <div class="card"><span class="pill p-a">Inundaciones y terreno difícil</span><p>Pasa por encima de ciénagas, ríos y lomas sin grandes obras de tierra.</p></div>
+  </div>
+  <div class="simple"><b>Pensando en el Bajo Cauca:</b> zonas que se inundan, ríos anchos como el Cauca y el Nechí, y tierra ganadera. Es justo el tipo de terreno donde Unitsky dice que su sistema tendría ventaja. Ojo: es una idea para entender el concepto, no hay ningún proyecto así aquí.</div>
+</section>
+
+<section id="vpg">
+  <h2><small>Parte 2</small>El Vehículo Planetario General (VPG)</h2>
+  <p class="lead">La segunda parte del video sube la apuesta: llevar gran cantidad de personas y carga al espacio cercano sin usar cohetes.</p>
+  <div class="grid">
+    <div class="card"><div class="big">40.076 km</div><p>Largo del VPG: un anillo que le da la vuelta completa a la Tierra por el ecuador.</p></div>
+    <div class="card"><div class="big">1982</div><p>Año en que Unitsky publicó por primera vez la idea, en una revista soviética de inventores.</p></div>
+    <div class="card"><div class="big">&lt; 1.000 USD/t</div><p>Costo que él promete para subir una tonelada a la órbita (hoy con cohetes cuesta muchísimo más).</p></div>
+  </div>
+  <h3>¿Cómo funcionaría, paso a paso?</h3>
+  <div class="timeline">
+    <div class="ev"><b>1. El anillo en el ecuador.</b> Se construye un paso elevado alrededor del planeta siguiendo la línea del ecuador. Sobre él descansa el VPG, un anillo hueco gigante.</div>
+    <div class="ev"><b>2. Los volantes por dentro.</b> Dentro del anillo hay dos "correas" o volantes que flotan en canales al vacío con suspensión magnética, sin tocar nada.</div>
+    <div class="ev"><b>3. Se aceleran con electricidad.</b> Motores eléctricos lineales ponen a girar esos volantes cada vez más rápido alrededor del planeta.</div>
+    <div class="ev"><b>4. La fuerza centrífuga lo levanta.</b> Cuando las correas giran más rápido que la velocidad orbital, la fuerza centrífuga empuja hacia afuera: el anillo se estira y sube, como un aro que se agranda.</div>
+    <div class="ev"><b>5. Llega a la órbita.</b> Con la carga y los pasajeros adentro, el anillo se eleva hasta la órbita baja, donde se descarga.</div>
+    <div class="ev"><b>6. Regresa.</b> Según el autor es un sistema reversible: al bajar devuelve energía y puede volver a la Tierra.</div>
+  </div>
+  <div class="simple"><b>Ejemplo de acá:</b> amarra una piedra a una cuerda y hazla girar: mientras más rápido, más tira hacia afuera. El VPG usa ese mismo tirón, pero con un anillo del tamaño del planeta.</div>
+  <h3>¿Para qué tanto?</h3>
+  <p>Unitsky dice que cada lanzamiento de cohete suelta toneladas de contaminantes y daña la capa de ozono. Su propuesta es que el VPG, al funcionar con electricidad, sea limpio, y que en el futuro sirva para sacar al espacio la industria más contaminante y así proteger la biosfera. Sus publicaciones hablan de llevar hasta 10 millones de toneladas y 10 millones de personas en un solo viaje.</p>
+  <div class="warnbox" style="border-color:var(--acc2);background:rgba(246,196,83,.06)">
+    <h3 style="color:var(--acc2)">Para tener los pies en la tierra</h3>
+    <p style="margin:0">El VPG es un <b>concepto en papel</b>. No se ha construido ni una parte. Exigiría un paso elevado de 40.000 km cruzando océanos, selvas y unos 13 países, y el acuerdo de todo el mundo. El propio Unitsky reconoce que es una tarea súper ambiciosa que necesitaría cooperación entre países. Los artículos científicos que lo describen los firman en su mayoría él y su propio equipo.</p>
+  </div>
+</section>
+
+<section id="union">
+  <h2><small>Las dos partes juntas</small>¿Qué tienen que ver el tren y el anillo espacial?</h2>
+  <p>El video responde a la pregunta de por qué ambas soluciones salen del mismo principio. La historia, según el propio Unitsky, es al revés de lo que uno pensaría:</p>
+  <ul class="list">
+    <li><b>Primero vino el espacio.</b> Él diseñó el VPG y necesitaba un paso elevado alrededor del ecuador para lanzarlo.</li>
+    <li><b>De ahí salió el tren.</b> Ese paso elevado con rieles tensados también podía servir para mover gente y carga en la Tierra. Así nació el transporte de cuerdas (uST).</li>
+    <li><b>El mismo principio:</b> estructuras livianas y tensadas, rodar o flotar con el mínimo rozamiento, energía eléctrica y moverse por encima del suelo para no dañarlo.</li>
+    <li><b>Un plan más grande:</b> todo hace parte de su programa EcoSpace, que incluye también ciudades lineales, plantas de energía y abono para recuperar suelos.</li>
+  </ul>
+  <div class="simple"><b>En una frase:</b> el uST sería el primer piso en la Tierra, y el VPG el ascensor al espacio construido sobre la misma idea.</div>
+</section>
+
+<section id="realidad">
+  <h2><small>Sin adornos</small>¿Qué existe de verdad hoy?</h2>
+  <p class="lead">Es importante separar lo que está construido de lo que es promesa.</p>
+  <div class="grid">
+    <div class="card"><span class="pill p-a">Existe</span><h3 style="margin-top:0">Pistas de prueba en Bielorrusia</h3><p>Desde 2017 tienen un centro en un terreno de 36 hectáreas donde han levantado varios tipos de vías de cuerdas para investigación y demostración.</p></div>
+    <div class="card"><span class="pill p-a">Existe</span><h3 style="margin-top:0">Centro de pruebas en Sharjah (Emiratos)</h3><p>En 2021 terminaron la primera etapa de una línea de prueba para carga y pasajeros, dentro de un parque tecnológico.</p></div>
+    <div class="card"><span class="pill p-b">En conversación</span><h3 style="margin-top:0">Gobiernos interesados</h3><p>En agosto de 2026, por ejemplo, el Ministerio de Transporte de Ghana dijo que estudiaría la tecnología, con un análisis de factibilidad pendiente.</p></div>
+    <div class="card"><span class="pill p-w">Todavía no</span><h3 style="margin-top:0">Una línea comercial grande</h3><p>Después de muchos años de anuncios, no tiene en funcionamiento una ruta comercial importante que transporte pasajeros todos los días. En 2021 la agencia AP reportó que aún no conseguía un proyecto grande.</p></div>
+  </div>
+  <p>Algunos expertos de transporte en Rusia han dicho que la técnica es interesante, pero que su eficiencia económica solo se puede comprobar con un proyecto real.</p>
+</section>
+
+<section id="ojo">
+  <h2><small>Muy importante</small>Ojo antes de poner plata</h2>
+  <div class="warnbox">
+    <h3>Si alguien te ofrece invertir en estos proyectos</h3>
+    <p>La ingeniería es una cosa y la forma en que se ha conseguido dinero es otra. Durante años, la marca <b>SkyWay</b>, que promocionaba los inventos de Unitsky, vendió "acciones" a personas comunes en muchos países mediante redes de mercadeo. Varios reguladores financieros lanzaron alertas:</p>
+    <ul class="list">
+      <li><b>Italia</b> (2019) le prohibió a SkyWay y a varias filiales vender acciones al público.</li>
+      <li><b>Nueva Zelanda</b> advirtió que podría tratarse de una estafa.</li>
+      <li><b>Bélgica</b> dijo que tenía características de esquema piramidal.</li>
+      <li><b>Lituania</b> le dijo al público que tuviera cuidado porque podía perder su dinero, y bloqueó sus páginas.</li>
+      <li><b>España</b> (CNMV) advirtió que SkyWay Capital y empresas asociadas no estaban autorizadas para captar inversión.</li>
+    </ul>
+    <p>Unitsky ha dicho que SkyWay no financia sus proyectos y que solo son "admiradores". También demandó a Lituania y alega que los ataques vienen de competidores. Cada quien saca sus conclusiones, pero las alertas oficiales son reales.</p>
+    <h3>Antes de invertir, en Colombia:</h3>
+    <ul class="list" style="margin-bottom:0">
+      <li>Pregunta si la empresa está vigilada por la <b>Superintendencia Financiera</b> y búscala en su página.</li>
+      <li>Desconfía si te pagan por traer a más gente o te prometen ganancias seguras.</li>
+      <li>No pongas plata que no puedas perder, y nunca por presión de "última oportunidad".</li>
+    </ul>
+  </div>
+  <p class="cap">Esta app explica el contenido del videoinforme con fines educativos. No es asesoría financiera ni recomienda invertir.</p>
+</section>
+
+<section id="glosario">
+  <h2><small>Palabras clave</small>Glosario</h2>
+  <details><summary>uST</summary><p>Siglas de Unitsky String Technologies: tecnologías de transporte de cuerdas (o "de cuerda") de Unitsky.</p></details>
+  <details><summary>Riel-cuerda</summary><p>Riel que lleva por dentro cables de acero muy tensados, que le dan rigidez sin necesidad de una viga pesada.</p></details>
+  <details><summary>Paso elevado</summary><p>Vía construida por encima del suelo, apoyada en torres, como un puente largo.</p></details>
+  <details><summary>Coeficiente de rodadura</summary><p>Número que dice cuánto se resiste algo a rodar. Mientras más bajo, menos energía se gasta.</p></details>
+  <details><summary>Aerodinámica</summary><p>Cómo se mueve el aire alrededor de un objeto. Una buena forma deja pasar el aire con menos resistencia.</p></details>
+  <details><summary>Espacio cercano / órbita baja</summary><p>La zona del espacio más próxima a la Tierra, a unos cientos de kilómetros de altura, donde giran muchos satélites.</p></details>
+  <details><summary>VPG (Vehículo Planetario General)</summary><p>El anillo de unos 40.000 km alrededor del ecuador que, según Unitsky, subiría a la órbita sin cohetes. En inglés: GPV.</p></details>
+  <details><summary>Fuerza centrífuga</summary><p>El tirón hacia afuera que se siente cuando algo gira rápido, como al hacer girar una piedra amarrada a una cuerda.</p></details>
+  <details><summary>Suspensión magnética</summary><p>Hacer flotar algo con imanes para que no roce con nada y no pierda energía.</p></details>
+  <details><summary>Biosfera</summary><p>Toda la parte del planeta donde hay vida: tierra, agua y aire.</p></details>
+  <details><summary>Esquema piramidal</summary><p>Negocio donde a los primeros se les paga con la plata de los que entran después, no con ganancias reales. Tarde o temprano se cae.</p></details>
+</section>
+
+<section id="quiz" class="quiz">
+  <h2><small>¿Quedó claro?</small>Ponte a prueba</h2>
+  <p>Puntaje: <span id="score">0</span> / <span id="total">0</span></p>
+  <div id="qbox"></div>
+  <button class="btn ghost" id="reset" type="button">Volver a empezar</button>
+</section>
+
+</main>
+
+<button class="btn listen" id="listen" type="button" aria-label="Escuchar la app en voz alta">🔊 Escuchar</button>
+
+<footer>
+  Explicación basada en el videoinforme de Anatoli Unitsky (canal Micron Global MC, traducción al español) y en fuentes públicas.<br>
+  Hecho por <b>Vibras Positivas HM</b> · Caucasia, Antioquia
+</footer>
+
+<script>
+// Calculadora de aerodinámica
+(function(){
+  var r=document.getElementById('vel'),vt=document.getElementById('velTxt'),pt=document.getElementById('potTxt'),pb=document.getElementById('potBar');
+  function up(){
+    var v=+r.value, f=Math.pow(v/50,3);
+    vt.textContent=v+' km/h';
+    pt.textContent=(f<10?f.toFixed(1):Math.round(f).toLocaleString('es-CO'))+'×';
+    pb.style.width=Math.max(2,Math.min(100,f/1000*100))+'%';
+    pb.style.background=f>300?'var(--warn)':f>60?'var(--acc2)':'var(--acc)';
+  }
+  r.addEventListener('input',up);up();
+})();
+
+// Pestaña activa
+(function(){
+  var links=[].slice.call(document.querySelectorAll('#tabs a'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'))});
+  if(!('IntersectionObserver' in window))return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.isIntersecting){var i=secs.indexOf(e.target);links.forEach(function(l){l.classList.remove('on')});
+      if(i>-1){links[i].classList.add('on');links[i].scrollIntoView({block:'nearest',inline:'center'});}}
+  })},{rootMargin:'-45% 0px -50% 0px'});
+  secs.forEach(function(s){if(s)io.observe(s)});
+})();
+
+// Quiz
+var Q=[
+ {p:'¿Por qué Unitsky prefiere la rueda de acero sobre riel de acero?',o:['Porque es más bonita','Porque casi no se deforma y pierde mucha menos energía al rodar','Porque no necesita electricidad'],c:1,e:'El acero sobre acero tiene una resistencia a rodar cerca de 10 veces menor que una llanta sobre asfalto.'},
+ {p:'Si un vehículo va al doble de velocidad, ¿cuánta más potencia gasta contra el aire?',o:['El doble','4 veces','8 veces'],c:2,e:'La potencia contra el aire crece con el cubo de la velocidad: 2×2×2 = 8.'},
+ {p:'¿Qué hace rígido al riel-cuerda?',o:['Cables de acero muy tensados por dentro','Una viga gruesa de concreto','Imanes'],c:0,e:'Como una cuerda de guitarra bien templada: la tensión le da rigidez.'},
+ {p:'¿Cuál es una ventaja de circular en el "segundo nivel"?',o:['Es más barato que caminar','El suelo de abajo queda libre y no hay choques con personas o animales','Va más despacio'],c:1,e:'Al ir elevado no ocupa la franja de tierra ni se cruza con el tráfico a nivel.'},
+ {p:'¿Qué forma tendría el Vehículo Planetario General (VPG)?',o:['Un cohete muy grande','Un anillo de unos 40.000 km alrededor del ecuador','Un globo'],c:1,e:'Le daría la vuelta completa al planeta por la línea del ecuador.'},
+ {p:'¿Qué fuerza levantaría al VPG hacia la órbita?',o:['La fuerza centrífuga de los volantes girando muy rápido','El combustible de cohete','El viento'],c:0,e:'Al girar más rápido que la velocidad orbital, el tirón hacia afuera eleva el anillo.'},
+ {p:'¿Qué nació primero en la historia de Unitsky?',o:['El tren de cuerdas','La idea del VPG para ir al espacio','Las ciudades lineales'],c:1,e:'El paso elevado ecuatorial del VPG dio origen al transporte de cuerdas en la Tierra.'},
+ {p:'¿Está construido hoy el VPG?',o:['Sí, funciona desde 2020','Solo una parte en Emiratos','No, es un concepto en papel'],c:2,e:'Lo que existe son pistas de prueba del transporte terrestre, no el VPG.'},
+ {p:'Si te ofrecen invertir en estos proyectos, ¿qué es lo primero que debes revisar en Colombia?',o:['Que el video tenga muchas vistas','Si la empresa está vigilada por la Superintendencia Financiera','Si el vendedor es amable'],c:1,e:'Varios reguladores del mundo han emitido alertas sobre SkyWay. Verifica siempre ante la Superfinanciera.'}
+];
+var score=0,answered=0;
+function render(){
+  var box=document.getElementById('qbox');box.innerHTML='';score=0;answered=0;
+  document.getElementById('total').textContent=Q.length;document.getElementById('score').textContent=0;
+  Q.forEach(function(q,qi){
+    var d=document.createElement('div');d.className='q';
+    var p=document.createElement('p');p.textContent=(qi+1)+'. '+q.p;d.appendChild(p);
+    var ex=document.createElement('div');ex.className='exp';ex.textContent=q.e;
+    q.o.forEach(function(t,oi){
+      var b=document.createElement('button');b.type='button';b.className='op';b.textContent=t;
+      b.onclick=function(){
+        if(d.dataset.done)return;d.dataset.done=1;answered++;
+        if(oi===q.c){b.classList.add('ok');score++;}else{b.classList.add('no');d.querySelectorAll('.op')[q.c].classList.add('ok');}
+        ex.style.display='block';document.getElementById('score').textContent=score;
+        if(answered===Q.length){var m=document.createElement('p');m.style.marginTop='10px';m.style.color='var(--acc2)';
+          m.textContent=score>=8?'¡Excelente! Entendiste el videoinforme.':score>=5?'¡Bien! Repasa las secciones donde fallaste.':'Vuelve a leer la app con calma y lo intentas otra vez.';box.appendChild(m);}
+      };
+      d.appendChild(b);
+    });
+    d.appendChild(ex);box.appendChild(d);
+  });
+}
+document.getElementById('reset').onclick=function(){render();document.getElementById('quiz').scrollIntoView();};
+render();
+
+// Lectura en voz alta
+(function(){
+  var btn=document.getElementById('listen');
+  if(!('speechSynthesis' in window)){btn.style.display='none';return;}
+  var on=false;
+  btn.onclick=function(){
+    if(on){speechSynthesis.cancel();on=false;btn.textContent='🔊 Escuchar';return;}
+    var sec=[].slice.call(document.querySelectorAll('main section')).find(function(s){var r=s.getBoundingClientRect();return r.bottom>120;})||document.querySelector('main section');
+    var t=sec.innerText.replace(/\s+/g,' ');
+    var u=new SpeechSynthesisUtterance(t);u.lang='es-CO';u.rate=0.95;
+    var vs=speechSynthesis.getVoices().filter(function(v){return /^es/i.test(v.lang)});if(vs.length)u.voice=vs.find(function(v){return /CO|419|MX|US/.test(v.lang)})||vs[0];
+    u.onend=function(){on=false;btn.textContent='🔊 Escuchar';};
+    speechSynthesis.cancel();speechSynthesis.speak(u);on=true;btn.textContent='⏹ Detener';
+  };
+})();
+
+// PWA
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
+</script>
+</body>
+</html>
